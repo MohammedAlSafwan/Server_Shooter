@@ -1,10 +1,12 @@
 package base;
 
+import util.Directions;
+
 public class Bullet {
 	private int ID; 
 	private int Ref; 
 	private Position Pos; 
-	
+
 	public Bullet(int ID, int PID, Position startPos)
 	{
 		this.ID = ID;
@@ -29,23 +31,23 @@ public class Bullet {
 	
 	public void Update() 
 	{
-		switch (Pos.Direction) 
+		switch (Pos.getDirection()) 
 		{
 		
-		case Direction.NORTH: 
-			Pos.y += Pos.speed;
+		case NORTH: 
+			Pos.setY(Pos.getY() + Pos.getSpeed());
 			break;
 		
-		case Direction.EAST:
-			Pos.x += Pos.speed;
+		case EAST:
+			Pos.setX(Pos.getX() + Pos.getSpeed());
 			break;
 		
-		case Direction.SOUTH:
-			Pos.y -= Pos.speed;
+		case SOUTH:
+			Pos.setY(Pos.getY() - Pos.getSpeed());
 			break;
 		
-		case Direction.WEST:
-			Pos.x -= Pos.speed; 
+		case WEST:
+			Pos.setX(Pos.getX() - Pos.getSpeed()); 
 			break;
 		}
 			
