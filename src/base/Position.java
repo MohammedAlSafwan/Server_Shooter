@@ -32,11 +32,11 @@ public class Position {
 		this.y = y;
 	}
 
-	public Directions getDir() {
+	public Directions getDirection() {
 		return direction;
 	}
 
-	public void setDir(Directions dir) {
+	public void setDirection(Directions dir) {
 		this.direction = dir;
 	}
 
