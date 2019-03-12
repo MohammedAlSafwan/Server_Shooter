@@ -1,6 +1,5 @@
 package base;
 
-import util.Directions;
 
 public class Bullet {
 	private int ID; 
