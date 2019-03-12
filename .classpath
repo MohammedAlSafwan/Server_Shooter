@@ -2,5 +2,12 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_201"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="lib"/>
+	<classpathentry kind="src" path="res"/>
+	<classpathentry kind="lib" path="lib/json-20180813.jar" sourcepath="lib/json-20180813-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Server_Shooter/lib/json-20180813-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
