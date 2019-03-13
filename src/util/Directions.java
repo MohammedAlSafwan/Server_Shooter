@@ -5,6 +5,9 @@ package util;
  * @date Mar 12, 2019
  */
 public enum Directions {
+	/*Created by Alex P
 	
+	An Enum Class to hold cardinal direrctions
+	*/
 	NORTH, EAST, SOUTH, WEST;
 }
