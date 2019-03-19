@@ -1,54 +1,48 @@
 package base;
 
-
 public class Bullet {
-	private int ID; 
-	private int Ref; 
-	private Position Pos; 
 
-	public Bullet(int ID, int PID, Position startPos)
-	{
-		this.ID = ID;
-		this.Ref = PID; 
-		this.Pos = startPos;
+	private int id;
+	private int reference;
+	private Position position;
+
+	public Bullet(int ID, int PID, Position startPos) {
+		this.id = ID;
+		this.reference = PID;
+		this.position = startPos;
 	}
 
-	public int getID() 
-	{
-		return ID;
+	public int getID() {
+		return id;
 	}
-	
-	public int getRef() 
-	{
-		return Ref;
+
+	public int getRef() {
+		return reference;
 	}
-	
-	public Position getPos() 
-	{
-		return Pos;
+
+	public Position getPos() {
+		return position;
 	}
-	
-	public void Update() 
-	{
-		switch (Pos.getDirection()) 
-		{
-		
-		case NORTH: 
-			Pos.setY(Pos.getY() + Pos.getSpeed());
+
+	public void Update() {
+		switch (position.getDirection()) {
+
+		case NORTH:
+			position.setY(position.getY() + position.getSpeed());
 			break;
-		
+
 		case EAST:
-			Pos.setX(Pos.getX() + Pos.getSpeed());
+			position.setX(position.getX() + position.getSpeed());
 			break;
-		
+
 		case SOUTH:
-			Pos.setY(Pos.getY() - Pos.getSpeed());
+			position.setY(position.getY() - position.getSpeed());
 			break;
-		
+
 		case WEST:
-			Pos.setX(Pos.getX() - Pos.getSpeed()); 
+			position.setX(position.getX() - position.getSpeed());
 			break;
 		}
-			
+
 	}
 }

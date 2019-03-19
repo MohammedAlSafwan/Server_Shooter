@@ -1,19 +1,25 @@
 package base;
 
+import org.json.JSONObject;
+
 import util.Directions;
 
 public class Position {
-	private float x;
-	private float y;
+
+	private float x, y;
 	private Directions direction;
 	private float speed;
-	
-	public Position()
-	{
-		x = 0;
-		y = 0;
-		speed = 0;
-		
+
+	private final String KEY_X = "x";
+	private final String KEY_Y = "y";
+	private final String KEY_DIRECTION = "direction";
+	private final String KEY_SPEED = "speed";
+
+	public Position(float x, float y, Directions direction) {
+		this.x = 0;
+		this.y = 0;
+		this.direction = direction;
+		this.speed = 0;
 	}
 
 	public float getX() {
@@ -47,6 +53,50 @@ public class Position {
 	public void setSpeed(float speed) {
 		this.speed = speed;
 	}
-	
-	
+
+	public void toPosition(String optString) {
+
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		// If the object is compared with itself then return true   
+		if (obj == this) {
+			return true;
+		}
+
+		//false if it's not a Position object
+		if (!(obj instanceof Position)) {
+			return false;
+		}
+
+		return ((Position) obj).getX() == this.x && ((Position) obj).getY() == this.y
+				&& ((Position) obj).getDirection().equals(this.direction) && ((Position) obj).getSpeed() == this.speed;
+	}
+
+	@Override
+	public String toString() {
+		return toJSON().toString();
+	}
+
+	public String toPrettyString() {
+		return toJSON().toString(4);
+	}
+
+	public JSONObject toJSON() {
+		JSONObject outgoingPosition = new JSONObject();
+
+		outgoingPosition.put(KEY_X, this.x);
+		outgoingPosition.put(KEY_Y, this.y);
+		outgoingPosition.put(KEY_DIRECTION, direction.toString());
+		outgoingPosition.put(KEY_SPEED, this.speed);
+		return outgoingPosition;
+	}
+
+	public void toPosition(JSONObject jsonMsg) {
+		this.x = jsonMsg.optFloat(KEY_X);
+		this.y = jsonMsg.optFloat(KEY_Y);
+		this.direction = Directions.valueOf(jsonMsg.getString(KEY_DIRECTION));
+		this.speed = jsonMsg.optFloat(KEY_SPEED);
+	}
 }
