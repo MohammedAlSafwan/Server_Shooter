@@ -18,12 +18,21 @@ public class Player {
 	private final String KEY_POSITION = "POSITION";
 	private final String KEY_NAME = "NAME";
 
+	public Player() {
+		id = 0;
+		name = "";
+		hp = 0;
+		position = null;
+		
+	}
+	
 	public Player(int id, Position position, String name) {
 		this.id = id;
 		this.name = name;
 		this.hp = 100;
 		this.position = position;
 	}
+	
 
 	/**
 	 * @return the id

@@ -3,7 +3,10 @@ package base;
 import org.json.JSONObject;
 
 import util.Directions;
-
+/**
+ * @author Ryan Gowan
+ * @date Mar 12, 2019
+ */
 public class Position {
 
 	private float x, y;
@@ -14,6 +17,13 @@ public class Position {
 	private final String KEY_Y = "y";
 	private final String KEY_DIRECTION = "direction";
 	private final String KEY_SPEED = "speed";
+	
+	public Position(){
+		x = 0;
+		y = 0;
+		direction = Directions.NULL;
+		speed = 0;
+	}
 
 	public Position(float x, float y, Directions direction) {
 		this.x = 0;

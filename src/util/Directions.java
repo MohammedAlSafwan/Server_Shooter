@@ -9,5 +9,5 @@ public enum Directions {
 	
 	An Enum Class to hold cardinal direrctions
 	*/
-	NORTH, EAST, SOUTH, WEST;
+	NULL,NORTH, EAST, SOUTH, WEST;
 }
