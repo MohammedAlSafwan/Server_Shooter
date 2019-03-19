@@ -5,5 +5,5 @@ package util;
  * @date Mar 19, 2019
  */
 public enum TileType {
-	GROUND, WALL;
+	NULL,GROUND, WALL;
 }

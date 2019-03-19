@@ -7,6 +7,14 @@ public class Tile {
 	private TileType tileType; //Replace with TileType var type
 	private float x, y;
 	private float width, height;
+	
+	public Tile() {
+		this.x = -1;
+		this.y = -1;
+		this.tileType = tileType.NULL;
+		this.width = -1;
+		this.height = -1;
+	}
 
 	public Tile(float x, float y, TileType tileType) {
 		this.x = x;

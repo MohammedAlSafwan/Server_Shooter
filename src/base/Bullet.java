@@ -11,6 +11,12 @@ public class Bullet {
 	private final String KEY_ID = "id";
 	private final String KEY_REFERENCE = "reference";
 	private final String KEY_POSITION = "position";
+	
+	public Bullet() {
+		this.id = -1;
+		this.reference = -1;
+		this.position = null;
+	}
 
 	public Bullet(int ID, int PID, Position startPos) {
 		this.id = ID;
