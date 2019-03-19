@@ -1,10 +1,16 @@
 package base;
 
+import org.json.JSONObject;
+
 public class Bullet {
 
 	private int id;
 	private int reference;
 	private Position position;
+
+	private final String KEY_ID = "id";
+	private final String KEY_REFERENCE = "reference";
+	private final String KEY_POSITION = "position";
 
 	public Bullet(int ID, int PID, Position startPos) {
 		this.id = ID;
@@ -12,15 +18,15 @@ public class Bullet {
 		this.position = startPos;
 	}
 
-	public int getID() {
+	public int getId() {
 		return id;
 	}
 
-	public int getRef() {
+	public int getReference() {
 		return reference;
 	}
 
-	public Position getPos() {
+	public Position getPosition() {
 		return position;
 	}
 
@@ -45,4 +51,45 @@ public class Bullet {
 		}
 
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		// If the object is compared with itself then return true   
+		if (obj == this) {
+			return true;
+		}
+
+		//false if it's not a Bullet object
+		if (!(obj instanceof Bullet)) {
+			return false;
+		}
+
+		return ((Bullet) obj).getId() == this.id && ((Bullet) obj).getReference() == this.reference
+				&& ((Bullet) obj).getPosition().equals(this.position);
+	}
+
+	@Override
+	public String toString() {
+		return toJSON().toString();
+	}
+
+	public String toPrettyString() {
+		return toJSON().toString(4);
+	}
+
+	public JSONObject toJSON() {
+		JSONObject outgoingBullet = new JSONObject();
+
+		outgoingBullet.put(KEY_ID, id);
+		outgoingBullet.put(KEY_REFERENCE, reference);
+		outgoingBullet.put(KEY_POSITION, position.toString());
+		return outgoingBullet;
+	}
+
+	public void toBullet(JSONObject jsonMsg) {
+		this.id = jsonMsg.optInt(KEY_ID);
+		this.reference = jsonMsg.optInt(KEY_REFERENCE);
+		this.position.toPosition(jsonMsg.optString(KEY_POSITION));
+	}
+
 }
