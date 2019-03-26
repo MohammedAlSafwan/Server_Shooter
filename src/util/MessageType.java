@@ -2,5 +2,5 @@ package util;
 
 public enum MessageType {
 
-	ADD_PLAYER, NULL;
+	ADD_PLAYER, UPDATE_PLAYER, RECEIVE_PLAYERS, NULL;
 }

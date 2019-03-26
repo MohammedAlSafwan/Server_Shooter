@@ -1,5 +1,8 @@
 package util;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import base.Player;
 import base.Position;
 
@@ -20,7 +23,24 @@ public class Resources {
 				break;
 			}
 		}
-		
+
 		return newID;
+	}
+
+	public Player[] getPlayers() {
+		return mPlayers;
+	}
+
+	public void updatePlayer(int index, JSONObject updatedPlayer) {
+		mPlayers[index].toPlayer(updatedPlayer);
+	}
+
+	public JSONArray getAllPlayers(int senderID) {
+		JSONArray allPlayers = new JSONArray();
+		for (int index = 0; index < mPlayers.length; index++) {
+			if (null != mPlayers[index] && senderID != index)
+				allPlayers.put(mPlayers[index].toJSON());
+		}
+		return allPlayers;
 	}
 }
