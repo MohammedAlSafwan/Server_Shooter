@@ -11,7 +11,7 @@ public class Bullet {
 	private final String KEY_ID = "id";
 	private final String KEY_REFERENCE = "reference";
 	private final String KEY_POSITION = "position";
-	
+
 	public Bullet() {
 		this.id = -1;
 		this.reference = -1;
@@ -36,36 +36,15 @@ public class Bullet {
 		return position;
 	}
 
-	public void Update() {
-		switch (position.getDirection()) {
-
-		case NORTH:
-			position.setY(position.getY() + position.getSpeed());
-			break;
-
-		case EAST:
-			position.setX(position.getX() + position.getSpeed());
-			break;
-
-		case SOUTH:
-			position.setY(position.getY() - position.getSpeed());
-			break;
-
-		case WEST:
-			position.setX(position.getX() - position.getSpeed());
-			break;
-		}
-
-	}
 
 	@Override
 	public boolean equals(Object obj) {
-		// If the object is compared with itself then return true   
+		// If the object is compared with itself then return true
 		if (obj == this) {
 			return true;
 		}
 
-		//false if it's not a Bullet object
+		// false if it's not a Bullet object
 		if (!(obj instanceof Bullet)) {
 			return false;
 		}
@@ -95,7 +74,7 @@ public class Bullet {
 	public void toBullet(JSONObject jsonMsg) {
 		this.id = jsonMsg.optInt(KEY_ID);
 		this.reference = jsonMsg.optInt(KEY_REFERENCE);
-		this.position.toPosition(jsonMsg.optString(KEY_POSITION));
+		this.position.toPosition(new JSONObject(jsonMsg.optString(KEY_POSITION)));
 	}
 
 }

@@ -13,26 +13,29 @@ public class Player {
 	private float hp;
 	private Position position;
 
+	private float panX = 24;
+	private float panY = 24;
+
 	private final String KEY_ID = "ID";
 	private final String KEY_HP = "HP";
 	private final String KEY_POSITION = "POSITION";
 	private final String KEY_NAME = "NAME";
 
 	public Player() {
-		id = 0;
+		id = -1;
 		name = "";
 		hp = 0;
-		position = null;
-		
+		position = new Position();
+
 	}
-	
+
 	public Player(int id, Position position, String name) {
 		this.id = id;
 		this.name = name;
 		this.hp = 100;
 		this.position = position;
+
 	}
-	
 
 	/**
 	 * @return the id
@@ -96,12 +99,12 @@ public class Player {
 
 	@Override
 	public boolean equals(Object obj) {
-		// If the object is compared with itself then return true   
+		// If the object is compared with itself then return true
 		if (obj == this) {
 			return true;
 		}
 
-		//false if it's not a Player object
+		// false if it's not a Player object
 		if (!(obj instanceof Player)) {
 			return false;
 		}
@@ -129,10 +132,23 @@ public class Player {
 	}
 
 	public void toPlayer(JSONObject jsonMsg) {
+		System.out.println("**********************************");
+
+		System.out.println(jsonMsg.toString());
+
+		System.out.println("**********************************");
+
 		this.id = jsonMsg.optInt(KEY_ID);
 		this.name = jsonMsg.optString(KEY_NAME);
 		this.hp = jsonMsg.optFloat(KEY_HP);
-		this.position.toPosition(jsonMsg.optString(KEY_POSITION));
+		this.position.toPosition(new JSONObject(jsonMsg.optString(KEY_POSITION)));
 	}
 
+	public void setFromOtherPlayer(Player newPlayer) {
+		this.position.setX(newPlayer.position.getX());
+		this.position.setY(newPlayer.position.getY());
+		this.position.setDirection(newPlayer.position.getDirection());
+		this.position.setSpeed(newPlayer.position.getSpeed());
+		this.hp = newPlayer.hp;
+	}
 }

@@ -3,6 +3,8 @@ package base;
 import org.json.JSONObject;
 
 import util.Directions;
+
+
 /**
  * @author Ryan Gowan
  * @date Mar 12, 2019
@@ -26,8 +28,8 @@ public class Position {
 	}
 
 	public Position(float x, float y, Directions direction) {
-		this.x = 0;
-		this.y = 0;
+		this.x = x;
+		this.y = y;
 		this.direction = direction;
 		this.speed = 0;
 	}
@@ -64,10 +66,6 @@ public class Position {
 		this.speed = speed;
 	}
 
-	public void toPosition(String optString) {
-
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		// If the object is compared with itself then return true   
@@ -95,7 +93,6 @@ public class Position {
 
 	public JSONObject toJSON() {
 		JSONObject outgoingPosition = new JSONObject();
-
 		outgoingPosition.put(KEY_X, this.x);
 		outgoingPosition.put(KEY_Y, this.y);
 		outgoingPosition.put(KEY_DIRECTION, direction.toString());
