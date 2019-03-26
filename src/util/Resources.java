@@ -33,6 +33,9 @@ public class Resources {
 
 	public void updatePlayer(int index, JSONObject updatedPlayer) {
 		mPlayers[index].toPlayer(updatedPlayer);
+//		System.err.println("updated player " + index);
+//		System.err.println(mPlayers[index].toPrettyString());
+
 	}
 
 	public JSONArray getAllPlayers(int senderID) {

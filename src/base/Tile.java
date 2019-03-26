@@ -1,7 +1,5 @@
 package base;
 
-import com.sun.prism.Texture;
-
 import util.TileType;
 
 public class Tile {

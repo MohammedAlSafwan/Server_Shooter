@@ -102,7 +102,7 @@ public class Slave extends Thread {
 
 	private void receivePlayers(Message incomingMsg, Socket server) {
 		JSONArray allPlayers = Master.mResources.getAllPlayers(Integer.parseInt(incomingMsg.getSender()));
-		incomingMsg.setBody(allPlayers.toString());
+		incomingMsg.setBody(allPlayers.toString());	
 		sendMessage(incomingMsg, server);
 	}
 }
