@@ -49,14 +49,19 @@ public class Slave extends Thread {
 		try {
 			outToServer = server.getOutputStream();
 			out = new DataOutputStream(outToServer);
-			
+
 			Message outgoingMsg = new Message();
+			int newID = Master.mResources.addPlayer();
+			// if (newID >= 0) {
 			outgoingMsg.setType(MessageType.ADD_PLAYER);
-			outgoingMsg.setBody(Master.playerCounter + "");
-			
+			outgoingMsg.setBody(newID + "");
+
 			out.writeUTF(outgoingMsg.toString());
-			Master.playerCounter++;
-			
+			//
+			// } else {
+			// // send an error msg
+			// }
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {

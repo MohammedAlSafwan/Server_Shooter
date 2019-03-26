@@ -5,17 +5,20 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 
+import util.Resources;
+
 public class Master extends Thread {
-	
+
 	private ServerSocket serverSocket;
 	private int port = 6066; // Establish port 6066 as a hard-coded port override
 
 	private String message = "";
-	public static int playerCounter;
-	
+	public static Resources mResources;
+
 	public Master() throws IOException {
 		serverSocket = new ServerSocket(port); // Instantiates the server socket
 		serverSocket.setSoTimeout(0); // Sets the timeout for the socket. A timeout of 0 establishes
+		mResources = new Resources();
 	} // an infinite timeout
 
 	public void run() {
