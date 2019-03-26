@@ -93,14 +93,15 @@ public class Position {
 
 	public JSONObject toJSON() {
 		JSONObject outgoingPosition = new JSONObject();
-		outgoingPosition.put(KEY_X, this.x);
-		outgoingPosition.put(KEY_Y, this.y);
+		outgoingPosition.put(KEY_X, x);
+		outgoingPosition.put(KEY_Y, y);
 		outgoingPosition.put(KEY_DIRECTION, direction.toString());
-		outgoingPosition.put(KEY_SPEED, this.speed);
+		outgoingPosition.put(KEY_SPEED, speed);
 		return outgoingPosition;
 	}
 
 	public void toPosition(JSONObject jsonMsg) {
+		System.out.println(jsonMsg);
 		this.x = jsonMsg.optFloat(KEY_X);
 		this.y = jsonMsg.optFloat(KEY_Y);
 		this.direction = Directions.valueOf(jsonMsg.getString(KEY_DIRECTION));

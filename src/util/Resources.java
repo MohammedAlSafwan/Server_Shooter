@@ -31,7 +31,7 @@ public class Resources {
 		return mPlayers;
 	}
 
-	public void updatePlayer(int index, JSONObject updatedPlayer) {
+	synchronized public void updatePlayer(int index, JSONObject updatedPlayer) {
 		mPlayers[index].toPlayer(updatedPlayer);
 //		System.err.println("updated player " + index);
 //		System.err.println(mPlayers[index].toPrettyString());
