@@ -4,6 +4,7 @@ import java.io.IOException;
 
 public class CoreThread {
 
+	public static boolean debugger = false;
 	public static void main(String[] args) {
 
 		try {

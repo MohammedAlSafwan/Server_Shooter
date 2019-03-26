@@ -23,7 +23,8 @@ public class Slave extends Thread {
 					new DataInputStream(server.getInputStream());
 
 			message = in.readUTF();
-			System.out.println(message);
+			if (CoreThread.debugger)
+				System.out.println(message);
 
 			Message incomingMsg = new Message();
 			incomingMsg.toMessage(new JSONObject(message));
@@ -31,7 +32,8 @@ public class Slave extends Thread {
 			digestMessages(incomingMsg, server);
 
 		} catch (SocketTimeoutException s) {
-			System.out.println("Socket timed out!");
+			if (CoreThread.debugger)
+				System.out.println("Socket timed out!");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -39,19 +41,28 @@ public class Slave extends Thread {
 	}
 
 	private void digestMessages(Message incomingMsg, Socket server) {
-
+		long start = 0L;
+		long end = 0L;
 		switch (incomingMsg.getType()) {
 		case ADD_PLAYER:
 			addPlayer(server);
 			break;
 		case UPDATE_PLAYER:
+			start = System.currentTimeMillis();
 			updatePlayer(incomingMsg);
-			incomingMsg = new Message();
 			incomingMsg.setType(MessageType.NULL);
+			incomingMsg.setBody("");
 			sendMessage(incomingMsg, server);
+			end = System.currentTimeMillis();
+			if(CoreThread.debugger)
+			System.out.println("time to UPDATE_PLAYER (" + incomingMsg.getSender() + ") = " + (end - start) + " ms");
 			break;
 		case RECEIVE_PLAYERS:
+			start = System.currentTimeMillis();
 			receivePlayers(incomingMsg, server);
+			end = System.currentTimeMillis();
+			if(CoreThread.debugger)
+			System.out.println("time to RECEIVE_PLAYERS (" + incomingMsg.getSender() + ") = " + (end - start) + " ms");
 			break;
 		default:
 			break;
@@ -102,7 +113,7 @@ public class Slave extends Thread {
 
 	private void receivePlayers(Message incomingMsg, Socket server) {
 		JSONArray allPlayers = Master.mResources.getAllPlayers(Integer.parseInt(incomingMsg.getSender()));
-		incomingMsg.setBody(allPlayers.toString());	
+		incomingMsg.setBody(allPlayers.toString());
 		sendMessage(incomingMsg, server);
 	}
 }

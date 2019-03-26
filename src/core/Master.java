@@ -28,6 +28,7 @@ public class Master extends Thread {
 				Thread thread = new Slave(server); // when we get a connection, start a new thread
 				thread.start();
 			} catch (SocketTimeoutException s) {
+				if(CoreThread.debugger)
 				System.out.println("Socket timed out!");
 				break;
 			} catch (IOException e) {

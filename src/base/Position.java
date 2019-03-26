@@ -2,6 +2,7 @@ package base;
 
 import org.json.JSONObject;
 
+import core.CoreThread;
 import util.Directions;
 
 
@@ -101,6 +102,7 @@ public class Position {
 	}
 
 	public void toPosition(JSONObject jsonMsg) {
+		if(CoreThread.debugger)
 		System.out.println(jsonMsg);
 		this.x = jsonMsg.optFloat(KEY_X);
 		this.y = jsonMsg.optFloat(KEY_Y);
