@@ -19,6 +19,7 @@ public class Resources {
 
 	public Resources() {
 		mPlayers = new Player[8];
+		mBullets = new ArrayList<>();
 	}
 
 	public int addPlayer() {
@@ -40,8 +41,8 @@ public class Resources {
 
 	synchronized public void updatePlayer(int index, JSONObject updatedPlayer) {
 		mPlayers[index].toPlayer(updatedPlayer);
-		//		System.err.println("updated player " + index);
-		//		System.err.println(mPlayers[index].toPrettyString());
+		// System.err.println("updated player " + index);
+		// System.err.println(mPlayers[index].toPrettyString());
 
 	}
 
@@ -59,27 +60,12 @@ public class Resources {
 	}
 
 	public JSONArray getAllBullets(int playerID, Date lastBulletDate) {
-		// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-		// Method				:	JSONArray getAllBullets()
-		//
-		// Method parameters	:	args - the method permits String command line parameters to be entered
-		//
-		// Method return		:	JSONArray
-		//
-		// Synopsis				:   
-		//							
-		//
-		// Modifications		:
-		//							Date			    Developer				Notes
-		//							  ----			      ---------			 	     -----
-		//							Mar 29, 2019		    Mohammed Al-Safwan				Initial setup
-		//
-		// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 		JSONArray allBullets = new JSONArray();
-		for (Bullet bullet : mBullets) {
-			if (null != bullet && bullet.getReference() != playerID && bullet.compareTo(bullet) > 0)
-				allBullets.put(bullet.toJSON());
-		}
+		if (!mBullets.isEmpty())
+			for (Bullet bullet : mBullets) {
+				if (null != bullet && bullet.getReference() != playerID && bullet.getCreationDate().after(lastBulletDate))
+					allBullets.put(bullet.toJSON());
+			}
 
 		return allBullets;
 	}
