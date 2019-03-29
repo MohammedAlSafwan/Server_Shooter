@@ -2,9 +2,7 @@ package base;
 
 import org.json.JSONObject;
 
-import core.CoreThread;
 import util.Directions;
-
 
 /**
  * @author Ryan Gowan
@@ -20,8 +18,8 @@ public class Position {
 	private final String KEY_Y = "y";
 	private final String KEY_DIRECTION = "direction";
 	private final String KEY_SPEED = "speed";
-	
-	public Position(){
+
+	public Position() {
 		x = 0;
 		y = 0;
 		direction = Directions.NULL;
@@ -41,6 +39,14 @@ public class Position {
 
 	public void setX(float x) {
 		this.x = x;
+	}
+
+	public void addX(float newX) {
+		x += newX;
+	}
+
+	public void addY(float newY) {
+		y += newY;
 	}
 
 	public float getY() {
@@ -94,19 +100,28 @@ public class Position {
 
 	public JSONObject toJSON() {
 		JSONObject outgoingPosition = new JSONObject();
-		outgoingPosition.put(KEY_X, x);
-		outgoingPosition.put(KEY_Y, y);
+		outgoingPosition.put(KEY_X, this.x);
+		outgoingPosition.put(KEY_Y, this.y);
 		outgoingPosition.put(KEY_DIRECTION, direction.toString());
-		outgoingPosition.put(KEY_SPEED, speed);
+		outgoingPosition.put(KEY_SPEED, this.speed);
 		return outgoingPosition;
 	}
 
 	public void toPosition(JSONObject jsonMsg) {
-		if(CoreThread.debugger)
-		System.out.println(jsonMsg);
 		this.x = jsonMsg.optFloat(KEY_X);
 		this.y = jsonMsg.optFloat(KEY_Y);
 		this.direction = Directions.valueOf(jsonMsg.getString(KEY_DIRECTION));
 		this.speed = jsonMsg.optFloat(KEY_SPEED);
 	}
+
+	@Override
+	public Position clone() {
+		Position newPos = new Position();
+		newPos.x = this.x;
+		newPos.y = this.y;
+		newPos.direction = this.direction;
+		newPos.speed = this.speed;
+		return newPos;
+	}
+
 }

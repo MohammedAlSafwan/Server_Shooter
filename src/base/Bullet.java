@@ -1,27 +1,42 @@
 package base;
 
+import java.util.Date;
+
 import org.json.JSONObject;
 
-public class Bullet {
+public class Bullet implements Comparable<Bullet> {
 
+	private static int idCounter;
 	private int id;
 	private int reference;
 	private Position position;
+	private Date creationDate;
 
 	private final String KEY_ID = "id";
 	private final String KEY_REFERENCE = "reference";
 	private final String KEY_POSITION = "position";
+	private final String KEY_DATE = "creatingDate";
+
+	private static final int panX = 24;
+	private static final int panY = 24;;
 
 	public Bullet() {
-		this.id = -1;
-		this.reference = -1;
-		this.position = null;
+		init(-1, new Position());
 	}
 
-	public Bullet(int ID, int PID, Position startPos) {
-		this.id = ID;
+	public Bullet(int PID, Position startPos) {
+		this.idCounter++;
+		init(PID, startPos);
+	}
+
+	private void init(int PID, Position startPos) {
+		this.id = idCounter;
 		this.reference = PID;
 		this.position = startPos;
+		this.position.addX(panX);
+		this.position.addY(panY);
+		this.creationDate = new Date();
+
 	}
 
 	public int getId() {
@@ -36,7 +51,6 @@ public class Bullet {
 		return position;
 	}
 
-
 	@Override
 	public boolean equals(Object obj) {
 		// If the object is compared with itself then return true
@@ -50,7 +64,16 @@ public class Bullet {
 		}
 
 		return ((Bullet) obj).getId() == this.id && ((Bullet) obj).getReference() == this.reference
-				&& ((Bullet) obj).getPosition().equals(this.position);
+				&& ((Bullet) obj).getPosition().equals(this.position)
+				&& ((Bullet) obj).getCreationDate() == this.creationDate;
+	}
+
+	public Date getCreationDate() {
+		return creationDate;
+	}
+
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}
 
 	@Override
@@ -64,10 +87,10 @@ public class Bullet {
 
 	public JSONObject toJSON() {
 		JSONObject outgoingBullet = new JSONObject();
-
-		outgoingBullet.put(KEY_ID, id);
-		outgoingBullet.put(KEY_REFERENCE, reference);
+		outgoingBullet.put(KEY_DATE, creationDate.getTime());
 		outgoingBullet.put(KEY_POSITION, position.toString());
+		outgoingBullet.put(KEY_REFERENCE, reference);
+		outgoingBullet.put(KEY_ID, id);
 		return outgoingBullet;
 	}
 
@@ -75,6 +98,14 @@ public class Bullet {
 		this.id = jsonMsg.optInt(KEY_ID);
 		this.reference = jsonMsg.optInt(KEY_REFERENCE);
 		this.position.toPosition(new JSONObject(jsonMsg.optString(KEY_POSITION)));
+		this.creationDate = new Date(jsonMsg.getLong(KEY_DATE));
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	@Override
+	public int compareTo(Bullet bulletToCompare) {
+		return this.creationDate.compareTo(bulletToCompare.creationDate);
+	}
 }
