@@ -109,45 +109,12 @@ public class Slave extends Thread {
 	}
 
 	private void receiveBullet(Message incomingMsg) {
-
-		// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-		// Method				:	void receiveBullet()
-		//
-		// Method parameters	:	args - the method permits String command line parameters to be entered
-		//
-		// Method return		:	void
-		//
-		// Synopsis				:   
-		//							
-		//
-		// Modifications		:
-		//							Date			    Developer				Notes
-		//							  ----			      ---------			 	     -----
-		//							Mar 29, 2019		    Mohammed Al-Safwan				Initial setup
-		//
-		// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 		Bullet newBullet = new Bullet();
 		newBullet.toBullet(new JSONObject(incomingMsg.getBody()));
 		Master.mResources.addBullet(newBullet);
 	}
 
 	private void sendEmptyMsg(Message incomingMsg, Socket server) {
-		// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-		// Method				:	void sendEmptyMsg()
-		//
-		// Method parameters	:	args - the method permits String command line parameters to be entered
-		//
-		// Method return		:	void
-		//
-		// Synopsis				:   
-		//							
-		//
-		// Modifications		:
-		//							Date			    Developer				Notes
-		//							  ----			      ---------			 	     -----
-		//							Mar 29, 2019		    Mohammed Al-Safwan				Initial setup
-		//
-		// =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 		incomingMsg.setType(MessageType.NULL);
 		incomingMsg.setBody("");
 		sendMessage(incomingMsg, server);

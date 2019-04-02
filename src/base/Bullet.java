@@ -11,7 +11,7 @@ public class Bullet implements Comparable<Bullet> {
 	private int reference;
 	private Position position;
 	private Date creationDate;
-
+	
 	private final String KEY_ID = "id";
 	private final String KEY_REFERENCE = "reference";
 	private final String KEY_POSITION = "position";
@@ -36,7 +36,6 @@ public class Bullet implements Comparable<Bullet> {
 		this.position.addX(panX);
 		this.position.addY(panY);
 		this.creationDate = new Date();
-
 	}
 
 	public int getId() {
@@ -98,7 +97,7 @@ public class Bullet implements Comparable<Bullet> {
 		this.id = jsonMsg.optInt(KEY_ID);
 		this.reference = jsonMsg.optInt(KEY_REFERENCE);
 		this.position.toPosition(new JSONObject(jsonMsg.optString(KEY_POSITION)));
-		this.creationDate = new Date(jsonMsg.getLong(KEY_DATE));
+//		this.creationDate = new Date(jsonMsg.getLong(KEY_DATE));
 	}
 
 	/* (non-Javadoc)
