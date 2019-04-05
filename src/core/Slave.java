@@ -46,43 +46,67 @@ public class Slave extends Thread {
 		long start = 0L;
 		long end = 0L;
 
-		switch (incomingMsg.getType()) {
+		if (Master.mResources.isGameOver) {
+			sendGameOver(incomingMsg, server);
+		} else {
+			switch (incomingMsg.getType()) {
 
-		case ADD_PLAYER:
-			addPlayer(server);
-			break;
+			case ADD_PLAYER:
+				addPlayer(server);
+				break;
 
-		case UPDATE_PLAYER:
-			start = System.currentTimeMillis();
-			updatePlayer(incomingMsg);
-			sendEmptyMsg(incomingMsg, server);
-			end = System.currentTimeMillis();
-			break;
+			case UPDATE_PLAYER:
+				start = System.currentTimeMillis();
+				updatePlayer(incomingMsg);
+				sendEmptyMsg(incomingMsg, server);
+				end = System.currentTimeMillis();
+				break;
 
-		case RECEIVE_PLAYERS:
-			start = System.currentTimeMillis();
-			receivePlayers(incomingMsg, server);
-			end = System.currentTimeMillis();
-			break;
+			case RECEIVE_PLAYERS:
+				start = System.currentTimeMillis();
+				receivePlayers(incomingMsg, server);
+				end = System.currentTimeMillis();
+				break;
 
-		case SEND_BULLET:
-			start = System.currentTimeMillis();
-			receiveBullet(incomingMsg);
-			sendEmptyMsg(incomingMsg, server);
-			end = System.currentTimeMillis();
-			break;
-			
-		case RECEIVE_BULLETS:
-			start = System.currentTimeMillis();
-			sendBullets(incomingMsg, server);
-			end = System.currentTimeMillis();
-			break;
-		default:
-			break;
+			case SEND_BULLET:
+				start = System.currentTimeMillis();
+				receiveBullet(incomingMsg);
+				sendEmptyMsg(incomingMsg, server);
+				end = System.currentTimeMillis();
+				break;
+
+			case RECEIVE_BULLETS:
+				start = System.currentTimeMillis();
+				sendBullets(incomingMsg, server);
+				end = System.currentTimeMillis();
+				break;
+
+			case KILLER_BULLET:
+				start = System.currentTimeMillis();
+				handleKillerBullet(incomingMsg);
+				sendEmptyMsg(incomingMsg, server);
+				end = System.currentTimeMillis();
+				break;
+			default:
+				break;
+			}
+
+			if (CoreThread.debugger)
+				System.out.println(
+						"time to RECEIVE_PLAYERS (" + incomingMsg.getSender() + ") = " + (end - start) + " ms");
 		}
 
-		if (CoreThread.debugger)
-			System.out.println("time to RECEIVE_PLAYERS (" + incomingMsg.getSender() + ") = " + (end - start) + " ms");
+	}
+
+	private void sendGameOver(Message incomingMsg, Socket server) {
+		incomingMsg.setType(MessageType.GAME_OVER);
+		incomingMsg.setSender(incomingMsg.getSender() + "");
+		incomingMsg.setBody(Master.mResources.getTop3Players());
+		sendMessage(incomingMsg, server);
+	}
+
+	private void handleKillerBullet(Message incomingMsg) {
+		Master.mResources.addKill(Integer.parseInt(incomingMsg.getBody()));
 	}
 
 	private void sendBullets(Message incomingMsg, Socket server) {

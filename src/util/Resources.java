@@ -16,10 +16,19 @@ public class Resources {
 
 	private Player[] mPlayers;
 	private ArrayList<Bullet> mBullets;
+	private int[] mKills;
+	private final int MAX_KILLS = 8;
+	public boolean isGameOver = false;
 
 	public Resources() {
 		mPlayers = new Player[8];
 		mBullets = new ArrayList<>();
+		mKills = new int[8];
+	}
+
+	synchronized public void addKill(int killerID) {
+		mKills[killerID]++;
+		isGameOver = mKills[killerID] >= MAX_KILLS;
 	}
 
 	public int addPlayer() {
@@ -63,10 +72,31 @@ public class Resources {
 		JSONArray allBullets = new JSONArray();
 		if (!mBullets.isEmpty())
 			for (Bullet bullet : mBullets) {
-				if (null != bullet && bullet.getReference() != playerID && bullet.getCreationDate().after(lastBulletDate))
+				if (null != bullet && bullet.getReference() != playerID
+						&& bullet.getCreationDate().after(lastBulletDate))
 					allBullets.put(bullet.toJSON());
 			}
 
 		return allBullets;
+	}
+
+	public String getTop3Players() {
+		StringBuilder top3Players = new StringBuilder();
+		int checks = 3;
+		
+		for (int highestScore = MAX_KILLS; highestScore > 0; highestScore--) {
+			for (int playerID = 0; playerID < 8; playerID++) {
+				int playerScore = mKills[playerID];
+
+				if (highestScore == playerScore) {
+					checks--;
+					top3Players.append(playerID + " " + playerScore + " ");
+				}
+
+				if (checks == 0)
+					return top3Players.toString();
+			}
+		}
+		return top3Players.toString();
 	}
 }
