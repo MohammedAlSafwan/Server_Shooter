@@ -15,15 +15,17 @@ import base.Position;
 public class Resources {
 
 	private Player[] mPlayers;
+
 	private ArrayList<Bullet> mBullets;
 	private int[] mKills;
+	private final int MAX_PLAYERS = 8;
 	private final int MAX_KILLS = 8;
 	public boolean isGameOver = false;
 
 	public Resources() {
-		mPlayers = new Player[8];
+		mPlayers = new Player[MAX_PLAYERS];
 		mBullets = new ArrayList<>();
-		mKills = new int[8];
+		mKills = new int[MAX_PLAYERS];
 	}
 
 	synchronized public void addKill(int killerID) {
@@ -83,9 +85,9 @@ public class Resources {
 	public String getTop3Players() {
 		StringBuilder top3Players = new StringBuilder();
 		int checks = 3;
-		
+
 		for (int highestScore = MAX_KILLS; highestScore > 0; highestScore--) {
-			for (int playerID = 0; playerID < 8; playerID++) {
+			for (int playerID = 0; playerID < MAX_PLAYERS; playerID++) {
 				int playerScore = mKills[playerID];
 
 				if (highestScore == playerScore) {
