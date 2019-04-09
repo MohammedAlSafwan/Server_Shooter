@@ -6,8 +6,6 @@ import java.util.Date;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
-
 import base.Bullet;
 import base.Player;
 import base.Position;
@@ -18,7 +16,7 @@ public class Resources {
 
 	private ArrayList<Bullet> mBullets;
 	private int[] mKills;
-	private final int MAX_PLAYERS = 8;
+	private final int MAX_PLAYERS = 12;
 	private final int MAX_KILLS = 8;
 	public boolean isGameOver = false;
 
